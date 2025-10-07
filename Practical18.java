@@ -1,11 +1,21 @@
+/**
+ * Practical 18: Write a program to handle exceptions using try, catch, finally, throw, and throws keywords. 
+ */
 public class Practical18 {
 
+    /**
+     * Checks if the age is valid (>= 18). Throws IllegalArgumentException if invalid.
+     *
+     * @param age age to check
+     * @throws IllegalArgumentException if age is below 18
+     */
     static void checkAge(int age) throws IllegalArgumentException {
-        if (age < 18){
+        if (age < 18) {
             throw new IllegalArgumentException("Age is below 18");
         } else {
             System.out.println("Age is valid : " + age);
         }
+
     }
 
     public static void main(String[] args) {
@@ -15,7 +25,8 @@ public class Practical18 {
         } catch (IllegalArgumentException e) {
             System.out.println("Error : " + e);
         } finally {
-            System.out.println("\nCode has ran sucessfully");
+            System.out.println("\nCode has run successfully");
         }
-    }    
+    }
+
 }

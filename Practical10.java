@@ -1,4 +1,8 @@
+/**
+ * Practical 10: Create programs of all the string methods like charAt(), concat(), equals() etc. 
+ */
 public class Practical10 {
+
     public static void main(String[] args) {
         String string1 = "Hello";
         String string2 = "World ";
@@ -43,4 +47,5 @@ public class Practical10 {
         System.out.println("Last index of 'l' in string1: " + string1.lastIndexOf('l'));
         System.out.println("Is string1 empty? : " + string1.isEmpty());
     }
+
 }

@@ -1,22 +1,39 @@
-// Parent class
+/**
+ * Demonstrates single inheritance in Java.
+ * Parrot class inherits from Bird class.
+ */
 class Bird {
+
+    /**
+     * Prints a message indicating the bird is flying.
+     */
     void fly() {
         System.out.println("Bird is flying");
     }
+
 }
 
-// Child class
 class Parrot extends Bird {
+
+    /**
+     * Prints a message indicating the parrot is speaking.
+     */
     void speak() {
         System.out.println("Parrot is speaking");
     }
+
 }
 
-// Main class
 public class Practical15_SingleInheritance {
+
     public static void main(String[] args) {
-        Parrot parrot = new Parrot(); // create object of child class
-        parrot.speak(); // call child method
-        parrot.fly();   // call inherited method from Bird
+        Parrot parrot = new Parrot(); // Create object of child class
+
+        // Call child method
+        parrot.speak();
+
+        // Call inherited method from parent class
+        parrot.fly();
     }
+
 }

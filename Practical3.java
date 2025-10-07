@@ -1,11 +1,17 @@
 import java.util.Scanner;
 
+/**
+ * Practical 3: Write a program to find the current month name from the given number of the switch case. 
+ */
 public class Practical3 {
+
     public static void main(String[] args) {
-        try(Scanner scanner = new Scanner(System.in)) {
+        // Try-with-resources to automatically close Scanner
+        try (Scanner scanner = new Scanner(System.in)) {
             System.out.print("Enter the number of the month (1-12): ");
             int userInput = scanner.nextInt();
 
+            // Print month name based on user input
             switch (userInput) {
                 case 1:
                     System.out.println("January");
@@ -48,7 +54,9 @@ public class Practical3 {
             }
 
         } catch (Exception e) {
-            System.out.println("Error : " + e);
+            System.out.println("Error: " + e);
         }
+
     }
+
 }

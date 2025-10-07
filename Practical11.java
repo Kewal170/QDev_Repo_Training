@@ -1,43 +1,69 @@
+/**
+ * Practical 11: Write a practical to use this/super variable. 
+ */
 class Animal {
-    void eat(){
+
+    /**
+     * Prints a generic eating message for Animal.
+     */
+    void eat() {
         System.out.println("Animal eats");
     }
 }
 
 class Lion extends Animal {
-    void eat(){
+
+    /**
+     * Overrides the eat method for Lion.
+     */
+    @Override
+    void eat() {
         System.out.println("Lion eats");
     }
 
-    void show(){
+    /**
+     * Calls the parent class eat method using super.
+     */
+    void show() {
         super.eat();
     }
+
 }
 
 class PrintNumber {
     int number;
 
-    PrintNumber(int number){
-        // here using this we have set userinput "number" from parameter to PrintNumber "number" variable.
+    /**
+     * Constructor that initializes the number using this keyword.
+     *
+     * @param number number to set
+     */
+    PrintNumber(int number) {
         this.number = number;
     }
 
-    void showNumber(){
+    /**
+     * Prints the number.
+     */
+    void showNumber() {
         System.out.println("Number : " + number);
     }
+
 }
 
 public class Practical11 {
+
     public static void main(String[] args) {
-        Lion lion =  new Lion();
-        // here Lion (child) class method is called
+        Lion lion = new Lion();
+
+        // Calls overridden method in Lion (child class)
         lion.eat();
 
-        // here Animal (parent) class method is called
+        // Calls method that uses super to invoke parent class method
         lion.show();
 
         PrintNumber printNumber = new PrintNumber(23);
         printNumber.showNumber();
     }
-    
+
 }

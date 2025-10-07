@@ -1,10 +1,10 @@
 CREATE TABLE hobby (
-h_id INT PRIMARY KEY,
+id INT PRIMARY KEY,
 NAME VARCHAR(40) NOT NULL
 );
 
 CREATE TABLE employee (
-e_id INT PRIMARY KEY,
+id INT PRIMARY KEY,
 first_name VARCHAR(50) NOT NULL,
 last_name VARCHAR(80) NOT NULL,
 age INT NOT NULL,
@@ -13,49 +13,49 @@ address VARCHAR(100) NOT NULL
 )
 
 CREATE TABLE employee_salary (
-es_id INT PRIMARY KEY,
-e_id INT NOT NULL,
-FOREIGN KEY (e_id) REFERENCES employee(e_id),
+id INT PRIMARY KEY,
+employee_id INT NOT NULL,
+FOREIGN KEY (employee_id) REFERENCES employee(id),
 salary INT NOT NULL,
 datee DATE
 )
 
 CREATE TABLE employee_hobby (
-eh_id INT PRIMARY KEY,
-e_id INT NOT NULL,
-h_id INT NOT NULL,
-FOREIGN KEY(e_id) REFERENCES employee(e_id),
-FOREIGN KEY(h_id) REFERENCES hobby(h_id)
+id INT PRIMARY KEY,
+employee_id INT NOT NULL,
+hobby_id INT NOT NULL,
+FOREIGN KEY(employee_id) REFERENCES employee(id),
+FOREIGN KEY(hobby_id) REFERENCES hobby(id)
 )
 
 --> Create a separate select queries to get a hobby, employee, employee_salary, employee_hobby. 
 SELECT h.name AS hobby , CONCAT(e.first_name , ' ' , e.last_name) AS employee, es.salary AS salary,
- eh.eh_id AS eh_id
+ eh.id AS employee_hobby_id
 FROM employee e
-LEFT JOIN employee_salary es ON  es.e_id = e.e_id
-LEFT JOIN employee_hobby eh ON eh.e_id = e.e_id
-LEFT JOIN hobby h ON h.h_id = eh.h_id;
+LEFT JOIN employee_salary es ON  es.employee_id = e.id
+LEFT JOIN employee_hobby eh ON eh.employee_id = e.id
+LEFT JOIN hobby h ON h.id = eh.hobby_id;
 
 --> Create a select single query to get all employee name, all hobby_name in single column 
 SELECT CONCAT(e.first_name, ' ', e.last_name, ' ', GROUP_CONCAT(h.name SEPARATOR ', ')) AS employee_plus_hobby
 FROM employee e
-LEFT JOIN employee_hobby eh ON eh.e_id = e.e_id
-LEFT JOIN hobby h ON h.h_id = eh.h_id
-GROUP BY e.e_id;
+LEFT JOIN employee_hobby eh ON eh.employee_id = e.id
+LEFT JOIN hobby h ON h.id = eh.hobby_id
+GROUP BY e.id;
 
 --> Create a select query to get  employee name, his/her employee_salary 
 SELECT CONCAT(e.first_name , ' ' , e.last_name) AS employee, es.salary AS salary
 FROM employee e
-LEFT JOIN employee_salary es ON e.e_id = es.e_id;
+LEFT JOIN employee_salary es ON e.id = es.employee_id;
 
 --> CREATE a SELECT QUERY TO get employee NAME, total salary OF employee, hobby NAME(comma-separated - you need TO USE subquery FOR hobby NAME).
 SELECT 
     CONCAT(e.first_name, ' ', e.last_name) AS employee_name,
     (SELECT SUM(es.salary) 
      FROM employee_salary es
-     WHERE es.e_id = e.e_id) AS total_salary,
+     WHERE es.employee_id = e.id) AS total_salary,
     (SELECT GROUP_CONCAT(h.name SEPARATOR ', ')
      FROM employee_hobby eh
-     JOIN hobby h ON h.h_id = eh.h_id
-     WHERE eh.e_id = e.e_id) AS hobbies,
+     JOIN hobby h ON h.id = eh.hobby_id
+     WHERE eh.employee_id = e.id) AS hobbies,
 FROM employee e;
