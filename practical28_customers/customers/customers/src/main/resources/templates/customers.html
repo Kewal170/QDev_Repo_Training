@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Customers</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h2>Customer List</h2>
+    <a class="btn btn-primary mb-2" th:href="@{/customers/new}">Add Customer</a>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Date of Birth</th>
+            <th>Mobile</th>
+            <th>Address</th>
+            <th>Gender</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="customer : ${customers}">
+            <td th:text="${customer.fullName}"></td>
+            <td th:text="${customer.dateOfBirth}"></td>
+            <td th:text="${customer.mobile}"></td>
+            <td th:text="${customer.fullAddress}"></td>
+            <td th:text="${customer.gender}"></td>
+            <td>
+                <a class="btn btn-success btn-sm" th:href="@{'/customers/edit/' + ${customer.id}}">Edit</a>
+                <a class="btn btn-danger btn-sm" th:href="@{'/customers/delete/' + ${customer.id}}" 
+                   onclick="return confirm('Are you sure?')">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

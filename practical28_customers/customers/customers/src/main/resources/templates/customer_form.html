@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Customer Form</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h2 th:text="${customer.id != null} ? 'Edit Customer' : 'Add Customer'"></h2>
+
+    <form th:action="@{/customers}" th:object="${customer}" method="post" id="customerForm">
+        
+        <!-- Validation error messages -->
+        <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger mb-3">
+            Please correct the highlighted errors below.
+        </div>
+
+        <input type="hidden" th:field="*{id}"/>
+
+        <div class="mb-3">
+            <label>First Name</label>
+            <input type="text" th:field="*{firstName}" class="form-control" required
+                   th:classappend="${#fields.hasErrors('firstName')} ? 'is-invalid'"/>
+            <div class="invalid-feedback" th:errors="*{firstName}"></div>
+        </div>
+
+        <div class="mb-3">
+            <label>Last Name</label>
+            <input type="text" th:field="*{lastName}" class="form-control" required
+                   th:classappend="${#fields.hasErrors('lastName')} ? 'is-invalid'"/>
+            <div class="invalid-feedback" th:errors="*{lastName}"></div>
+        </div>
+
+        <div class="mb-3">
+            <label>Date of Birth</label>
+            <input type="date" th:field="*{dateOfBirth}" class="form-control" required
+                   th:classappend="${#fields.hasErrors('dateOfBirth')} ? 'is-invalid'"/>
+            <div class="invalid-feedback" th:errors="*{dateOfBirth}"></div>
+        </div>
+
+        <div class="mb-3">
+            <label>Mobile</label>
+            <input type="text" th:field="*{mobile}" class="form-control" maxlength="10" required
+                   th:classappend="${#fields.hasErrors('mobile')} ? 'is-invalid'"/>
+            <div class="invalid-feedback" th:errors="*{mobile}"></div>
+        </div>
+
+        <div class="mb-3">
+            <label>Address 1</label>
+            <input type="text" th:field="*{address1}" class="form-control" required
+                   th:classappend="${#fields.hasErrors('address1')} ? 'is-invalid'"/>
+            <div class="invalid-feedback" th:errors="*{address1}"></div>
+        </div>
+
+        <div class="mb-3">
+            <label>Address 2</label>
+            <input type="text" th:field="*{address2}" class="form-control"/>
+        </div>
+
+        <div class="mb-3">
+            <label>Age</label>
+            <input type="number" th:field="*{age}" class="form-control" required min="1"
+                   th:classappend="${#fields.hasErrors('age')} ? 'is-invalid'"/>
+            <div class="invalid-feedback" th:errors="*{age}"></div>
+        </div>
+
+        <div class="mb-3">
+            <label>Gender</label>
+            <select th:field="*{gender}" class="form-select" required
+                    th:classappend="${#fields.hasErrors('gender')} ? 'is-invalid'">
+                <option value="" disabled selected>Select Gender</option>
+                <option th:each="g : ${T(com.kewal.customers.model.Gender).values()}"
+                        th:value="${g}" th:text="${g}">Gender</option>
+            </select>
+            <div class="invalid-feedback" th:errors="*{gender}"></div>
+        </div>
+
+        <div class="mb-3">
+            <label>Email</label>
+            <input type="email" th:field="*{email}" class="form-control" required
+                   th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'"/>
+            <div class="invalid-feedback" th:errors="*{email}"></div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="submitBtn" disabled>Submit</button>
+        <a th:href="@{/customers}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+
+<script>
+    const form = document.getElementById('customerForm');
+    const submitBtn = document.getElementById('submitBtn');
+
+    function checkFormValidity() {
+        submitBtn.disabled = !form.checkValidity();
+    }
+
+    // Check on page load
+    checkFormValidity();
+
+    // Add event listeners for all input/select fields
+    const inputs = form.querySelectorAll('input, select');
+    inputs.forEach(input => {
+        input.addEventListener('input', checkFormValidity);
+        input.addEventListener('change', checkFormValidity);
+    });
+</script>
+</body>
+</html>
